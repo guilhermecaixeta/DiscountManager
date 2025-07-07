@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "discountmanager_web",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
+      "serviceActions": {
+        "discountmanager_web": "StartDebugging",
+        "discountmanager_backend": "StartDebugging",
+        "discountmanager_worker": "StartDebugging",
+        "postgres": "StartWithoutDebugging"
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+services:
+  discountmanager_backend:
+    image: ${DOCKER_REGISTRY-}discountmanager_backend
+    build:
+      context: .
+      dockerfile: DiscountManager.Api/Dockerfile
+    networks:
+      - discount_manager_network
+
+  discountmanager_web:
+    image: ${DOCKER_REGISTRY-}discountmanager_web
+    build:
+      context: .
+      dockerfile: DiscountManager.Web/Dockerfile
+    networks:
+      - discount_manager_network
+    depends_on:
+      - discountmanager_backend
+
+  discountmanager_worker:
+    image: ${DOCKER_REGISTRY-}discountmanager_worker
+    build:
+      context: .
+      dockerfile: DiscountManager.Worker/Dockerfile
+    networks:
+      - discount_manager_network
+    depends_on:
+      - discountmanager_backend
+  
+  postgres:
+    image: postgres:12-alpine
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  discount_manager_network:
+    external: false
+    name: discount_manager_network
