@@ -6,6 +6,8 @@ services:
       dockerfile: DiscountManager.Api/Dockerfile
     networks:
       - discount_manager_network
+    depends_on:
+      - rabbitmq
 
   discountmanager_web:
     image: ${DOCKER_REGISTRY-}discountmanager_web
@@ -16,6 +18,7 @@ services:
       - discount_manager_network
     depends_on:
       - discountmanager_backend
+      - rabbitmq
 
   discountmanager_worker:
     image: ${DOCKER_REGISTRY-}discountmanager_worker
@@ -26,6 +29,7 @@ services:
       - discount_manager_network
     depends_on:
       - discountmanager_backend
+      - rabbitmq
   
   postgres:
     image: postgres:12-alpine

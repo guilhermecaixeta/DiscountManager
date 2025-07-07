@@ -25,17 +25,19 @@ namespace DiscountManager.RabbitMQ.Impl.Handlers
             {
                 if (logger.IsEnabled(LogLevel.Warning))
                 {
-                    logger.LogWarning("Received empty code, skipping processing.");
+                    logger.LogWarning("No code was found, skipping processing.");
                 }
 
                 return;
             }
 
-            var discountCodes = request.Codes.Select(code => new DiscountCode
-            {
-                Code = code,
-                State = Core.Enums.State.Active
-            }).ToList();
+            var discountCodes = request
+                .Codes
+                .Select(code => new DiscountCode
+                {
+                    Code = code,
+                    State = Core.Enums.State.Active
+                });
 
             if (logger.IsEnabled(LogLevel.Information))
             {
@@ -50,7 +52,7 @@ namespace DiscountManager.RabbitMQ.Impl.Handlers
 
                 if (logger.IsEnabled(LogLevel.Information))
                 {
-                    logger.LogInformation("Code persisted");
+                    logger.LogInformation("All codes were persisted");
                 }
             }
             catch (Exception ex)

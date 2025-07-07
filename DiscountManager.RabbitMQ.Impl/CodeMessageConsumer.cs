@@ -19,7 +19,7 @@ namespace DiscountManager.RabbitMQ.Impl
                 await Connect(token);
 
                 var consumer = new AsyncEventingBasicConsumer(Channel);
-                
+
                 consumer.ReceivedAsync += OnReceivedEvent;
 
                 await Channel.BasicConsumeAsync(
@@ -42,7 +42,7 @@ namespace DiscountManager.RabbitMQ.Impl
 
                 var request = new DiscountCodeRequest
                 {
-                    Codes = messages
+                    Codes = messages ?? []
                 };
 
                 await mediator.Send(request, @event.CancellationToken);
